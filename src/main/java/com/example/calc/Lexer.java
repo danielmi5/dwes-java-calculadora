@@ -27,6 +27,12 @@ public final class Lexer {
                 case '^' -> { i++; tokens.add(new Token(TokenType.CARET, "^", start)); }
                 case '(' -> { i++; tokens.add(new Token(TokenType.LPAREN, "(", start)); }
                 case ')' -> { i++; tokens.add(new Token(TokenType.RPAREN, ")", start)); }
+                case 'y' -> { i++; if (Main.result != null) {
+                    tokens.add(new Token(TokenType.NUMBER, Double.toString(Main.result), start)) ;
+                } else {
+                    throw new IllegalArgumentException("No existe ningún resultado anterior para 'y' (pos "+ start +")");
+                }
+                }
                 default -> {
                     if (Character.isDigit(c) || c == '.') {
                         tokens.add(number());

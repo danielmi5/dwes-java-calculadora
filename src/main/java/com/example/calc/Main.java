@@ -6,31 +6,41 @@ import java.util.Scanner;
 public class Main {
     private static final String HELP = """
         === Calc21 ===
-        Operaciones: +  -  *  /  ^    Funciones: sin(x), cos(x)
+        Operaciones: +  -  *  /  ^    Funciones: sin(x), cos(x) Valores: y
         Precedencia: ^ (derecha), luego * /, luego + -
         Ejemplos:
           1 + 2*3
           (1 + 2) * 3 ^ 2
           -2 ^ 3
           sin(3.14159/2) + cos(0)
+          y será igual al último resultado
         Escribe 'exit' para salir.
+        Escribe 'clear' para limpiar.
         """;
+
+    public static Double result = null;
 
     public static void main(String[] args) {
         System.out.println(HELP);
         Scanner sc = new Scanner(System.in);
+
+
         while (true) {
             System.out.print("> ");
             String line = sc.nextLine();
             if (line == null) break;
             line = line.trim();
             if (line.equalsIgnoreCase("exit")) break;
+            if (line.equalsIgnoreCase("clear")) {
+                clearConsole();
+                continue;
+            }
             if (line.isBlank()) continue;
 
             try {
                 List<Token> tokens = new Lexer(line).lex();
                 Expr ast = new Parser(tokens).parse();
-                double result = Evaluator.eval(ast);
+                result = Evaluator.eval(ast);
                 System.out.println(result);
             } catch (IllegalArgumentException ex) {
                 System.out.println("Error: " + ex.getMessage());
@@ -39,5 +49,25 @@ public class Main {
             }
         }
         System.out.println("Adiós!");
+    }
+
+    public static void clearConsole() {
+        try {
+            if (System.console() == null) {
+                for (int i = 0; i < 50; i++) {
+                    System.out.println();
+                }
+            } else {
+                if (System.getProperty("os.name").contains("Windows")) {
+                    new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                } else {
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("No se pudo limpiar la consola");
+        }
     }
 }
