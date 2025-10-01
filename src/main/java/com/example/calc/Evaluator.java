@@ -21,6 +21,7 @@ public final class Evaluator {
                     case '*' -> l * r;
                     case '/' -> l / r;
                     case '^' -> Math.pow(l, r);
+                    case '%' -> l % r;
                     default -> throw new IllegalStateException("Operador no soportado: " + b.op());
                 };
             }

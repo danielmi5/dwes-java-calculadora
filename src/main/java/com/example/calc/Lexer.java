@@ -27,6 +27,7 @@ public final class Lexer {
                 case '^' -> { i++; tokens.add(new Token(TokenType.CARET, "^", start)); }
                 case '(' -> { i++; tokens.add(new Token(TokenType.LPAREN, "(", start)); }
                 case ')' -> { i++; tokens.add(new Token(TokenType.RPAREN, ")", start)); }
+                case '%' -> { i++; tokens.add(new Token(TokenType.MODULO, "%", start)); }
                 case 'y' -> { i++; if (Main.result != null) {
                     tokens.add(new Token(TokenType.NUMBER, Double.toString(Main.result), start)) ;
                 } else {

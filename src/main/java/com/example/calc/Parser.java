@@ -29,7 +29,7 @@ public final class Parser {
 
     private Expr term() {
         Expr left = factor();
-        while (match(STAR) || match(SLASH)) {
+        while (match(STAR) || match(SLASH) || match(MODULO)) {
             char op = prev().lexeme().charAt(0);
             Expr right = factor();
             left = new Binary(left, op, right);
