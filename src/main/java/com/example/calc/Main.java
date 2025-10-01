@@ -1,5 +1,7 @@
 package com.example.calc;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -42,6 +44,7 @@ public class Main {
                 Expr ast = new Parser(tokens).parse();
                 result = Evaluator.eval(ast);
                 System.out.println(result);
+                writeFile("data.txt", line + " = "+ result);
             } catch (IllegalArgumentException ex) {
                 System.out.println("Error: " + ex.getMessage());
             } catch (Exception ex) {
@@ -65,9 +68,20 @@ public class Main {
                     System.out.flush();
                 }
             }
-
         } catch (Exception e) {
             System.out.println("No se pudo limpiar la consola");
+        }
+    }
+
+    public static void writeFile(String fileName, String line) throws IOException {
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter("data/"+fileName, true);
+            writer.write(line + System.lineSeparator());
+        } catch (IOException e) {
+            throw e;
+        } finally {
+            if (writer != null) writer.close();
         }
     }
 }
