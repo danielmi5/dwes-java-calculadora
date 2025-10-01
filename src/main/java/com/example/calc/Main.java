@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
     private static final String HELP = """
         === Calc21 ===
-        Operaciones: +  -  *  /  ^    Funciones: sin(x), cos(x) Valores: y
+        Operaciones: +  -  *  /  ^  %   Funciones: sin(x), cos(x), tan(x) Valores: y (resultado anterior)
         Precedencia: ^ (derecha), luego * /, luego + -
         Ejemplos:
           1 + 2*3
