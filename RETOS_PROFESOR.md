@@ -22,8 +22,8 @@ Lanza y muestra un Error: Token inesperado: STAR en pos 4.
 Devuelve 25.0
 
 ## Retos de modificación
-- Añade la función `tan(x)` usando el mismo esquema que `sin` y `cos`.
-Simplemente añadí a la clase Evaluator en el caso "Call", la tangente:
+- Añade la función `tan(x)` usando el mismo esquema que `sin` y `cos`. Además, modifica el parser para que acepte también la función `sqrt(x)`.
+Simplemente añadí a la clase Evaluator en el caso "Call", la tangente y sqrt:
 ``` java
 case Call c -> {
     double x = eval(c.arg());
@@ -31,11 +31,12 @@ case Call c -> {
         case "sin" -> Math.sin(x);
         case "cos" -> Math.cos(x);
         case "tan" -> Math.tan(x);
+        case "sqrt" -> Math.sqrt(x);
         default -> throw new IllegalArgumentException("Función no soportada: " + c.name());
     };
 }
 ```
-- Modifica el parser para que acepte también la función `sqrt(x)`.
+
 - Haz que la calculadora acepte números negativos explícitos como `-5 + 3`.  
 La calculadora ya admite números negativos.
 
@@ -47,6 +48,10 @@ La calculadora ya admite números negativos.
 Devuelve 45.0
 
 ## Retos de diseño
-- El código actual usa un parser recursivo. ¿Qué ventaja tiene frente a procesar los tokens con un bucle y pila manual?
-- ¿Por qué es útil separar la calculadora en las fases **lexer → parser → evaluator** en vez de hacerlo todo en un solo método?
+- El código actual usa un parser recursivo. ¿Qué ventaja tiene frente a procesar los tokens con un bucle y pila manual? 
+Un parser recursivo hace el código más simple y fácil de leer porque la pila de llamadas ya maneja por sí sola la anidación y la precedencia de operadores, sin necesidad de implementar estructuras extra. Esto reduce la lógica que hay que escribir y facilita mantener o extender el parser en el futuro.
+
+- ¿Por qué es útil separar la calculadora en las fases **lexer → parser → evaluator** en vez de hacerlo todo en un solo método?  
+Es útil porque separa las responsabilidades en tres clases independientes: el Lexer convierte caracteres en tokens, el Parser transforma tokens en AST, y el Evaluator ejecuta el AST para producir resultados. Esto permite modificar, testear y reutilizar cada clase por separado sin afectar a las demás clases, y además, facilita el mantenimiento y proporciona un mejor manejo de los errores,
+
 - Si quisieras añadir soporte para variables (`x = 5`, `y = 2 * x`), ¿en qué parte del código lo implementarías y por qué?
