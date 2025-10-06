@@ -21,6 +21,7 @@ public class Main {
         """;
 
     public static Double result = null;
+    private static Double lastResult = null;
 
     public static void main(String[] args) {
         System.out.println(HELP);
@@ -37,6 +38,13 @@ public class Main {
                 clearConsole();
                 continue;
             }
+            if (lastResult != null && line.matches("^[+\\-*/^].*")) {
+                line = lastResult + " " + line;
+            }
+
+            if (lastResult != null) {
+                line = line.replaceAll("(?i)\\bAns\\b", lastResult.toString());
+            }
             if (line.isBlank()) continue;
 
             try {
@@ -44,6 +52,7 @@ public class Main {
                 Expr ast = new Parser(tokens).parse();
                 result = Evaluator.eval(ast);
                 System.out.println(result);
+                lastResult = result;
                 writeFile("data.txt", line + " = "+ result);
             } catch (IllegalArgumentException ex) {
                 System.out.println("Error: " + ex.getMessage());
