@@ -96,10 +96,16 @@ La calculadora ya admite números negativos.
 
 ## Retos de predicción
 - ¿Qué resultado debería devolver esta expresión y por qué?: `cos(0) + sin(90)`  
-  *(recuerda: las funciones trigonométricas usan radianes).*
-- ¿Cuál es el resultado de `2 ^ 3 ^ 2`? Explica por qué según la precedencia implementada.
-- ¿Qué devuelve la calculadora con `(2 + 3) * (4 + 5)`?  
-Devuelve 45.0
+  *(recuerda: las funciones trigonométricas usan radianes).*  
+Debería devolver 1.8939966636005579.
+Primero calcula las funciones trigonométricas usando radianes: cos(0) = 1.0, sin(90) = 0.8939966636005579, y por último los suma: 1.0 + 0.8939966636005579 = 1.8939966636005579.
+
+- ¿Cuál es el resultado de `2 ^ 3 ^ 2`? Explica por qué según la precedencia implementada.  
+El resultado es 512.0. Según las reglas, las potencias se evalúan de derecha a izquierda, por lo que primero se calcula 3 ^ 2 = 9 y luego 2 ^ 9 = 512 (siendo este su resultado).
+
+- ¿Qué devuelve la calculadora con `(2 + 3) * (4 + 5)`?     
+Devuelve 45.0.
+Primero calcula las operaciones que están entre parentesis (2+3=5) y (4+5=9), después multiplica sus resultados (5*9=45)
 
 ## Retos de diseño
 - El código actual usa un parser recursivo. ¿Qué ventaja tiene frente a procesar los tokens con un bucle y pila manual?   
