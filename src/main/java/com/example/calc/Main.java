@@ -61,24 +61,22 @@ public class Main {
             }
         }
         System.out.println("Adiós!");
+        sc.close();
     }
 
     public static void clearConsole() {
         try {
-            if (System.console() == null) {
-                for (int i = 0; i < 50; i++) {
-                    System.out.println();
-                }
+
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
-                if (System.getProperty("os.name").contains("Windows")) {
-                    new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-                } else {
-                    System.out.print("\033[H\033[2J");
-                    System.out.flush();
-                }
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
         } catch (Exception e) {
-            System.out.println("No se pudo limpiar la consola");
+            
+            for (int i = 0; i < 50; i++) {
+                    System.out.println();
+                }
         }
     }
 
